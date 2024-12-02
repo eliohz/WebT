@@ -10,6 +10,7 @@ if ($conn->connect_error) {
     die("Verbindung fehlgeschlagen: " . $conn->connect_error);
 }
 
+// Funktion: Numerische Darstellung -> Symbolisch
 function numericToSymbolic($numeric) {
     $permissions = ["---", "--x", "-w-", "-wx", "r--", "r-x", "rw-", "rwx"];
     $symbolic = "";
@@ -21,6 +22,7 @@ function numericToSymbolic($numeric) {
     return $symbolic;
 }
 
+// Funktion: Symbolisch -> Numerische Darstellung
 function symbolicToNumeric($symbolic) {
     $mapping = [
         'r' => 4,
@@ -37,9 +39,41 @@ function symbolicToNumeric($symbolic) {
     return $numeric;
 }
 
+// Funktion: Checkboxen -> Symbolisch
+function checkboxesToSymbolic($checkboxes) {
+    $mapping = [
+        'read' => 'r',
+        'write' => 'w',
+        'execute' => 'x'
+    ];
+
+    $sections = ['owner', 'group', 'others'];
+    $symbolic = '';
+
+    foreach ($sections as $section) {
+        $sectionPermissions = '';
+
+        foreach (['read', 'write', 'execute'] as $permission) {
+            $key = $section . '-' . $permission;
+            $sectionPermissions .= isset($checkboxes[$key]) ? $mapping[$permission] : '-';
+        }
+
+        $symbolic .= $sectionPermissions;
+    }
+
+    return $symbolic;
+}
+
+// POST-Logik
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $symbolic = $_POST['symbolic'] ?? null;
     $numeric = $_POST['numeric'] ?? null;
+    $checkboxes = $_POST['checkboxes'] ?? []; // Checkbox-Daten aus POST holen
+
+    if ($checkboxes) {
+        $symbolic = checkboxesToSymbolic($checkboxes);
+        $numeric = symbolicToNumeric($symbolic);
+    }
 
     if ($symbolic) {
         $numeric = symbolicToNumeric($symbolic);
@@ -65,6 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->close();
 }
 
+// GET-Logik
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $result = $conn->query("SELECT * FROM permissions");
 
