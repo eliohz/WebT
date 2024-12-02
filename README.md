@@ -1,4 +1,4 @@
-# README
+# WEBT_MM.H24
 
 ## Projektbeschreibung
 Dieses Projekt ist eine Webapplikation, die im Rahmen des Abschlussprojekts für das Modul WEBT erstellt wurde. Sie umfasst ein Frontend und ein Backend, die miteinander interagieren, um Eingaben zu verarbeiten und Ergebnisse anzuzeigen.
