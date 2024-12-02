@@ -1,6 +1,5 @@
 @import url('https://www.w3schools.com/w3css/4/w3.css');
 
-/* Allgemeine Stile */
 body {
     font-family: monospace;
     margin: 0;
@@ -21,7 +20,7 @@ input[type="text"], input[type="number"] {
 }
 
 .button-wrapper {
-    text-align: center; /* Zentriert den Button */
+    text-align: center;
 }
 
 button {
