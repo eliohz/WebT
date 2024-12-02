@@ -1,0 +1,146 @@
+@import url('https://www.w3schools.com/w3css/4/w3.css');
+
+/* Allgemeine Stile */
+body {
+    font-family: monospace;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+input {
+    margin-right: 0.3rem;
+}
+
+input[type="text"], input[type="number"] {
+    width: calc(100% - 1rem);
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top: 0.5rem;
+}
+
+.button-wrapper {
+    text-align: center; /* Zentriert den Button */
+}
+
+button {
+    background-color: #333;
+    color: #fff;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-top: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #E3A909;
+}
+
+
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #333;
+    color: #fff;
+    padding: 1rem;
+}
+
+header h1 {
+    font-family: monospace !important;
+    margin: 0 1rem;
+    font-size: 2rem;
+}
+
+header img {
+    width: 50px;
+    height: auto;
+}
+
+nav {
+    background-color: #E3A909;
+    color: white;
+    padding: 0.5rem;
+    text-align: center;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin: 0 1rem;
+    font-weight: bold;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+main {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+fieldset {
+    border: 1px solid #ccc;
+    margin: 1rem 0;
+    width: 100%;
+    max-width: 600px;
+}
+
+fieldset label {
+    display: flex;
+    align-items: center;
+    margin: 0;
+}
+
+legend {
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+#checkbox-section {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    width: 100%;
+    max-width: 900px;
+}
+
+#checkbox-section fieldset {
+    flex: 1;
+    margin: 0;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    text-align: center;
+    min-width: 150px;
+}
+
+@media screen and (max-width: 600px) {
+
+    header img {
+        display: none;
+    }
+    
+    header {
+        flex-direction: column;
+    }
+
+    header h1 {
+        margin: 1rem 0;
+    }
+
+    nav {
+        font-size: 0.9rem;
+    }
+
+    #checkbox-section {
+        flex-direction: column;
+        align-items: center;
+    }
+}

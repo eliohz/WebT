@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linux Permission Calculator</title>
+    <link rel="icon" type="image/png" href="img/tux.png">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <img src="img/tux.png" alt="Tux">
+        <h1>Linux Permission Calculator</h1>
+        <img src="img/tux.png" alt="Tux">
+    </header>
+
+    <nav>
+        <a href="#info-section">Information</a>
+        <a href="#calculator-section">Eingabe und Ausgabe</a>
+    </nav>
+
+    <main>
+        <section id="info-section">
+            <p>Dieser <b>Linux-Berechtigungsrechner</b> wurde von Elio Heinz für des Moduls "Web Technologies" als praktische Arbeit im HS24 entwickelt. <br> Mit diesem Tool lassen sich Berechtigungen für das Linux-Betriebssystem schnell und einfach berechnen. Die Ergebnisse werden übersichtlich und benutzerfreundlich dargestellt.</p>
+
+            <ul>
+                <li><strong>Symbolische Darstellung:</strong> z. B. rwxrwxrwx</li>
+                <li><strong>Numerische Darstellung:</strong> z. B. 777</li>
+                <li><strong>Checkboxen:</strong> für detaillierte Anpassung der Berechtigungen</li>
+            </ul>
+            <img src="img/permissions-diagram.png" alt="Permissions Diagram">
+        </section>
+
+        <section id="calculator-section">
+            <fieldset>
+                <legend>Symbolische Darstellung</legend>
+                <input type="text" id="text-permissions" maxlength="9" placeholder="z.B. rwxrwxrwx">
+            </fieldset>
+
+            <fieldset>
+                <legend>Numerische Darstellung</legend>
+                <input type="number" id="numeric-permissions" min="0" max="777" placeholder="z.B. 777">
+            </fieldset>
+
+            <fieldset>
+                <legend>Checkboxen</legend>
+                <div id="checkbox-section">
+                    <fieldset>
+                        <legend>Besitzer</legend>
+                        <label><input type="checkbox" id="owner-read"> Lesen</label>
+                        <label><input type="checkbox" id="owner-write"> Schreiben</label>
+                        <label><input type="checkbox" id="owner-execute"> Ausführen</label>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Gruppe</legend>
+                        <label><input type="checkbox" id="group-read"> Lesen</label>
+                        <label><input type="checkbox" id="group-write"> Schreiben</label>
+                        <label><input type="checkbox" id="group-execute"> Ausführen</label>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Andere</legend>
+                        <label><input type="checkbox" id="others-read"> Lesen</label>
+                        <label><input type="checkbox" id="others-write"> Schreiben</label>
+                        <label><input type="checkbox" id="others-execute"> Ausführen</label>
+                    </fieldset>                 
+                </div>
+            </fieldset>
+
+            <div class="button-wrapper">
+                <button id="calculate-button">Berechnen</button>
+            </div>
+        </section>
+    </main>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
