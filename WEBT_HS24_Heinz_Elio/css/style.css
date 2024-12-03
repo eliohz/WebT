@@ -1,5 +1,8 @@
+/* ----------------------- W3 CSS implementation ----------------------- */
 @import url('https://www.w3schools.com/w3css/4/w3.css');
 
+
+/* -------------------------- Basic CSS Teil --------------------------- */
 body {
     font-family: monospace;
     margin: 0;
@@ -120,6 +123,7 @@ legend {
     min-width: 150px;
 }
 
+/* ------------------ Responsive CSS Teil für Mobile ------------------- */
 @media screen and (max-width: 600px) {
 
     header img {

@@ -15,12 +15,15 @@
         </header>
 
         <nav>
+            <!-- Navbar Bereich für Informativer Teil -->
             <a href="#info-section">Information</a>
+            <!-- Navbar Bereich für Rechner -->
             <a href="#calculator-section">Eingabe und Ausgabe</a>
         </nav>
 
         <main>
             <section id="info-section">
+                <!-- Erklärung vom Projekt und der fuktionalität -->
                 <p>Dieser <b>Linux-Berechtigungsrechner</b> wurde von Elio Heinz für des Moduls "Web Technologies" als praktische Arbeit im HS24 entwickelt. <br>User können Linux-Dateiberechtigungen einfach verwalten, indem sie zwischen symbolischer Darstellung, numerischer Darstellung und Checkboxen wechseln.<br>Das Ergebnis wird automatisch in den anderen Feldern angezeigt.</p>
                 <ul>
                     <li><strong>Symbolische Darstellung:</strong> z. B. rwxrwxrwx</li>
@@ -31,16 +34,19 @@
             </section>
 
             <section id="calculator-section">
+                <!-- Input/Output Teil Symbolische Darstellung -->
                 <fieldset>
                     <legend>Symbolische Darstellung</legend>
                     <input type="text" id="text-permissions" maxlength="9" placeholder="z.B. rwxrwxrwx">
                 </fieldset>
-
+                
+                <!-- Input/Output Teil Numerische Darstellung -->
                 <fieldset>
                     <legend>Numerische Darstellung</legend>
                     <input type="number" id="numeric-permissions" min="0" max="777" placeholder="z.B. 777">
                 </fieldset>
 
+                <!-- Input/Output Teil Checkboxen -->
                 <fieldset>
                     <legend>Checkboxen</legend>
                     <div id="checkbox-section">
@@ -64,13 +70,15 @@
                         </fieldset>                                  
                     </div>
                 </fieldset>
-
+                <!-- Knopf zum berechnen -->
                 <div class="button-wrapper">
                     <button id="calculate-button">Berechnen</button>
                 </div>
+
             </section>
         </main>
-
-        <script src="js/script.js" defer></script>
+        <!-- Javascript aufgeteilt in Navigation und Rechner -->
+        <script src="js/navigation.js" defer></script>
+        <script src="js/calculator.js" defer></script>
     </body>
     </html>
