@@ -3,6 +3,8 @@
 ## Projektbeschreibung
 Dieses Projekt ist eine Webapplikation, die im Rahmen des Abschlussprojekts für das Modul WEBT erstellt wurde. Sie umfasst ein Frontend und ein Backend, die miteinander interagieren, um Eingaben zu verarbeiten und Ergebnisse anzuzeigen.
 
+![alt picture](https://github.com/eliohz/WebT/blob/main/project.PNG) 
+
 ## Anforderungen
 - **Frontend**: Ein HTML-Dokument mit Navigation, Informationsbereich, Eingabefeldern und einem Ausgabebereich. Eingaben werden ohne Seiten-Neuladen ans Backend gesendet.
 - **Backend**: Verarbeitung der Eingaben, Erstellung eines JSON-Dokuments und Rückgabe einer Antwort mit sichtbarem Effekt.
