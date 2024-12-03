@@ -1,19 +1,15 @@
--- Erstellen der Datenbank (falls noch nicht vorhanden)
 CREATE DATABASE IF NOT EXISTS linux_permissions;
 USE linux_permissions;
 
--- Erstellen der Tabelle `permissions`
 CREATE TABLE IF NOT EXISTS permissions (
-    id INT AUTO_INCREMENT PRIMARY KEY,         -- Eindeutige ID für jede Berechtigung
-    symbolic VARCHAR(9) NOT NULL,              -- Symbolische Berechtigungen (z.B. rwxrwxrwx)
-    numeric VARCHAR(3) NOT NULL,               -- Numerische Berechtigungen (z.B. 777)
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP -- Automatisches Datum und Uhrzeit der Erstellung
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    symbolic VARCHAR(9) NOT NULL,
+    `numeric` VARCHAR(3) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Alle möglichen Linux-Berechtigungen einfügen
-INSERT INTO permissions (symbolic, numeric)
+INSERT INTO permissions (symbolic, `numeric`)
 VALUES
--- Besitzer-Berechtigungen
 ('rwxrwxrwx', '777'),
 ('rwxrwxrw-', '776'),
 ('rwxrwxr--', '774'),

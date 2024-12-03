@@ -1,76 +1,76 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Linux Permission Calculator</title>
-    <link rel="icon" type="image/png" href="img/tux.png">
-    <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
-    <header>
-        <img src="img/tux.png" alt="Tux">
-        <h1>Linux Permission Calculator</h1>
-        <img src="img/tux.png" alt="Tux">
-    </header>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Linux Permission Calculator</title>
+        <link rel="icon" type="image/png" href="img/tux.png">
+        <link rel="stylesheet" href="css/style.css">
+    </head>
+    <body>
+        <header>
+            <img src="img/tux.png" alt="Tux">
+            <h1>Linux Permission Calculator</h1>
+            <img src="img/tux.png" alt="Tux">
+        </header>
 
-    <nav>
-        <a href="#info-section">Information</a>
-        <a href="#calculator-section">Eingabe und Ausgabe</a>
-    </nav>
+        <nav>
+            <a href="#info-section">Information</a>
+            <a href="#calculator-section">Eingabe und Ausgabe</a>
+        </nav>
 
-    <main>
-        <section id="info-section">
-            <p>Dieser <b>Linux-Berechtigungsrechner</b> wurde von Elio Heinz für des Moduls "Web Technologies" als praktische Arbeit im HS24 entwickelt. <br>User können Linux-Dateiberechtigungen einfach verwalten, indem sie zwischen symbolischer Darstellung, numerischer Darstellung und Checkboxen wechseln.<br>Das Ergebnis wird automatisch in den anderen Feldern angezeigt.</p>
-            <ul>
-                <li><strong>Symbolische Darstellung:</strong> z. B. rwxrwxrwx</li>
-                <li><strong>Numerische Darstellung:</strong> z. B. 777</li>
-                <li><strong>Checkboxen:</strong> für detaillierte Anpassung der Berechtigungen</li>
-            </ul>
-            <img src="img/permissions-diagram.png" alt="Permissions Diagram">
-        </section>
+        <main>
+            <section id="info-section">
+                <p>Dieser <b>Linux-Berechtigungsrechner</b> wurde von Elio Heinz für des Moduls "Web Technologies" als praktische Arbeit im HS24 entwickelt. <br>User können Linux-Dateiberechtigungen einfach verwalten, indem sie zwischen symbolischer Darstellung, numerischer Darstellung und Checkboxen wechseln.<br>Das Ergebnis wird automatisch in den anderen Feldern angezeigt.</p>
+                <ul>
+                    <li><strong>Symbolische Darstellung:</strong> z. B. rwxrwxrwx</li>
+                    <li><strong>Numerische Darstellung:</strong> z. B. 777</li>
+                    <li><strong>Checkboxen:</strong> für detaillierte Anpassung der Berechtigungen</li>
+                </ul>
+                <!-- <img src="img/permissions-diagram.png" alt="Permissions Diagram"> !-->
+            </section>
 
-        <section id="calculator-section">
-            <fieldset>
-                <legend>Symbolische Darstellung</legend>
-                <input type="text" id="text-permissions" maxlength="9" placeholder="z.B. rwxrwxrwx">
-            </fieldset>
+            <section id="calculator-section">
+                <fieldset>
+                    <legend>Symbolische Darstellung</legend>
+                    <input type="text" id="text-permissions" maxlength="9" placeholder="z.B. rwxrwxrwx">
+                </fieldset>
 
-            <fieldset>
-                <legend>Numerische Darstellung</legend>
-                <input type="number" id="numeric-permissions" min="0" max="777" placeholder="z.B. 777">
-            </fieldset>
+                <fieldset>
+                    <legend>Numerische Darstellung</legend>
+                    <input type="number" id="numeric-permissions" min="0" max="777" placeholder="z.B. 777">
+                </fieldset>
 
-            <fieldset>
-                <legend>Checkboxen</legend>
-                <div id="checkbox-section">
-                    <fieldset>
-                        <legend>Besitzer</legend>
-                        <label><input type="checkbox" name="checkboxes[owner-read]" id="owner-read"> Lesen</label>
-                        <label><input type="checkbox" name="checkboxes[owner-write]" id="owner-write"> Schreiben</label>
-                        <label><input type="checkbox" name="checkboxes[owner-execute]" id="owner-execute"> Ausführen</label>
-                    </fieldset>
-                    <fieldset>
-                        <legend>Gruppe</legend>
-                        <label><input type="checkbox" name="checkboxes[group-read]" id="group-read"> Lesen</label>
-                        <label><input type="checkbox" name="checkboxes[group-write]" id="group-write"> Schreiben</label>
-                        <label><input type="checkbox" name="checkboxes[group-execute]" id="group-execute"> Ausführen</label>
-                    </fieldset>
-                    <fieldset>
-                        <legend>Andere</legend>
-                        <label><input type="checkbox" name="checkboxes[others-read]" id="others-read"> Lesen</label>
-                        <label><input type="checkbox" name="checkboxes[others-write]" id="others-write"> Schreiben</label>
-                        <label><input type="checkbox" name="checkboxes[others-execute]" id="others-execute"> Ausführen</label>
-                    </fieldset>                                  
+                <fieldset>
+                    <legend>Checkboxen</legend>
+                    <div id="checkbox-section">
+                        <fieldset>
+                            <legend>Besitzer</legend>
+                            <label><input type="checkbox" name="checkboxes[owner-read]" id="owner-read"> Lesen</label>
+                            <label><input type="checkbox" name="checkboxes[owner-write]" id="owner-write"> Schreiben</label>
+                            <label><input type="checkbox" name="checkboxes[owner-execute]" id="owner-execute"> Ausführen</label>
+                        </fieldset>
+                        <fieldset>
+                            <legend>Gruppe</legend>
+                            <label><input type="checkbox" name="checkboxes[group-read]" id="group-read"> Lesen</label>
+                            <label><input type="checkbox" name="checkboxes[group-write]" id="group-write"> Schreiben</label>
+                            <label><input type="checkbox" name="checkboxes[group-execute]" id="group-execute"> Ausführen</label>
+                        </fieldset>
+                        <fieldset>
+                            <legend>Andere</legend>
+                            <label><input type="checkbox" name="checkboxes[others-read]" id="others-read"> Lesen</label>
+                            <label><input type="checkbox" name="checkboxes[others-write]" id="others-write"> Schreiben</label>
+                            <label><input type="checkbox" name="checkboxes[others-execute]" id="others-execute"> Ausführen</label>
+                        </fieldset>                                  
+                    </div>
+                </fieldset>
+
+                <div class="button-wrapper">
+                    <button id="calculate-button">Berechnen</button>
                 </div>
-            </fieldset>
+            </section>
+        </main>
 
-            <div class="button-wrapper">
-                <button id="calculate-button">Berechnen</button>
-            </div>
-        </section>
-    </main>
-
-    <script src="js/script.js"></script>
-</body>
-</html>
+        <script src="js/script.js" defer></script>
+    </body>
+    </html>

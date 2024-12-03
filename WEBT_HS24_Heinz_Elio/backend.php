@@ -1,16 +1,45 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "linux_permissions";
+header('Content-Type: application/json');
 
-$conn = new mysqli($servername, $username, $password, $dbname);
+// Enable error reporting for debugging
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 
-if ($conn->connect_error) {
-    die("Verbindung fehlgeschlagen: " . $conn->connect_error);
+// Read and log the raw POST body for debugging
+$rawInput = file_get_contents("php://input");
+file_put_contents('php://stderr', "Raw Input: $rawInput\n", FILE_APPEND);
+
+// Decode the JSON input
+$data = json_decode($rawInput, true);
+
+if (!$data) {
+    echo json_encode(['success' => false, 'error' => 'No data received or invalid JSON.']);
+    exit;
 }
 
-// Funktion: Numerische Darstellung -> Symbolisch
+// Get the symbolic or numeric value from the input
+$symbolic = $data['symbolic'] ?? '';
+$numeric = $data['numeric'] ?? '';
+
+if ($symbolic) {
+    // Convert symbolic to numeric
+    $numeric = symbolicToNumeric($symbolic);
+} elseif ($numeric) {
+    // Convert numeric to symbolic
+    $symbolic = numericToSymbolic($numeric);
+} else {
+    echo json_encode(['success' => false, 'error' => 'Invalid input.']);
+    exit;
+}
+
+// Return the result
+echo json_encode([
+    'success' => true,
+    'symbolic' => $symbolic,
+    'numeric' => $numeric,
+]);
+
+// Convert numeric permissions to symbolic (e.g., "755" to "rwxr-xr-x")
 function numericToSymbolic($numeric) {
     $permissions = ["---", "--x", "-w-", "-wx", "r--", "r-x", "rw-", "rwx"];
     $symbolic = "";
@@ -22,94 +51,14 @@ function numericToSymbolic($numeric) {
     return $symbolic;
 }
 
-// Funktion: Symbolisch -> Numerische Darstellung
+// Convert symbolic permissions to numeric (e.g., "rwxr-xr-x" to "755")
 function symbolicToNumeric($symbolic) {
-    $mapping = [
-        'r' => 4,
-        'w' => 2,
-        'x' => 1,
-        '-' => 0
-    ];
-
+    $mapping = ['r' => 4, 'w' => 2, 'x' => 1, '-' => 0];
     $numeric = "";
+
     for ($i = 0; $i < strlen($symbolic); $i += 3) {
         $numeric .= $mapping[$symbolic[$i]] + $mapping[$symbolic[$i + 1]] + $mapping[$symbolic[$i + 2]];
     }
 
     return $numeric;
 }
-
-// Funktion: Checkboxen -> Symbolisch
-function checkboxesToSymbolic($checkboxes) {
-    $mapping = [
-        'read' => 'r',
-        'write' => 'w',
-        'execute' => 'x'
-    ];
-
-    $sections = ['owner', 'group', 'others'];
-    $symbolic = '';
-
-    foreach ($sections as $section) {
-        $sectionPermissions = '';
-
-        foreach (['read', 'write', 'execute'] as $permission) {
-            $key = $section . '-' . $permission;
-            $sectionPermissions .= isset($checkboxes[$key]) ? $mapping[$permission] : '-';
-        }
-
-        $symbolic .= $sectionPermissions;
-    }
-
-    return $symbolic;
-}
-
-// POST-Logik
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $symbolic = $_POST['symbolic'] ?? null;
-    $numeric = $_POST['numeric'] ?? null;
-    $checkboxes = $_POST['checkboxes'] ?? []; // Checkbox-Daten aus POST holen
-
-    if ($checkboxes) {
-        $symbolic = checkboxesToSymbolic($checkboxes);
-        $numeric = symbolicToNumeric($symbolic);
-    }
-
-    if ($symbolic) {
-        $numeric = symbolicToNumeric($symbolic);
-    }
-
-    if ($numeric) {
-        $symbolic = numericToSymbolic($numeric);
-    }
-
-    $stmt = $conn->prepare("INSERT INTO permissions (symbolic, numeric) VALUES (?, ?)");
-    $stmt->bind_param("ss", $symbolic, $numeric);
-
-    if ($stmt->execute()) {
-        echo json_encode([
-            'success' => true,
-            'symbolic' => $symbolic,
-            'numeric' => $numeric
-        ]);
-    } else {
-        echo json_encode(['success' => false, 'error' => $conn->error]);
-    }
-
-    $stmt->close();
-}
-
-// GET-Logik
-if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    $result = $conn->query("SELECT * FROM permissions");
-
-    $data = [];
-    while ($row = $result->fetch_assoc()) {
-        $data[] = $row;
-    }
-
-    echo json_encode($data);
-}
-
-$conn->close();
-?>
