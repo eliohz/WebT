@@ -60,9 +60,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Event-Listener für den Berechnen Button
     calculateButton.addEventListener("click", () => {
-        // Falls keine Eingabe gemacht wurde, nach 2 Klicks alles zurücksetzen
-        if (!lastInputSource && ++noInputClickCount >= 1) return resetFields();
-
         const data = lastInputSource === "symbolic"
             ? { symbolic: textPermissions.value.trim() }
             : lastInputSource === "numeric"
