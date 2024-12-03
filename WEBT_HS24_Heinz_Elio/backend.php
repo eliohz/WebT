@@ -21,7 +21,7 @@ if (!$data) {
 $symbolic = $data['symbolic'] ?? '';
 $numeric = $data['numeric'] ?? '';
 
-// Custom Cookie Handling
+// Cookie Handling
 $lastInput = $_COOKIE['lastInput'] ?? null;
 
 if ($symbolic) {

@@ -1,85 +1,90 @@
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Linux Permission Calculator</title>
-        <link rel="icon" type="image/png" href="img/tux.png">
-        <link rel="stylesheet" href="css/style.css">
-    </head>
-    <body>
-        <header>
-            <!-- Header -->
-            <img src="img/tux.png" alt="Tux">
-            <h1>Linux Permission Calculator</h1>
-            <img src="img/tux.png" alt="Tux">
-        </header>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linux Permission Calculator</title>
+    <link rel="icon" type="image/png" href="img/tux.png">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="w3-light-grey">
+    <header class="w3-container w3-dark-grey w3-center">
+        <!-- Header -->
+        <img src="img/tux.png" alt="Tux" class="w3-image w3-round" style="width: 50px; height: auto;">
+        <h1>Linux Permission Calculator</h1>
+        <img src="img/tux.png" alt="Tux" class="w3-image w3-round" style="width: 50px; height: auto;">
+    </header>
 
-        <nav>
-            <!-- Navbar Bereich für Informativer Teil -->
-            <a href="#info-section">Information</a>
-            <!-- Navbar Bereich für Rechner -->
-            <a href="#calculator-section">Eingabe und Ausgabe</a>
-        </nav>
+    <nav class="w3-bar w3-orange">
+        <!-- Navbar Bereich für Informativer Teil -->
+        <a href="#info-section" class="w3-bar-item w3-button w3-hover-light-grey">Information</a>
+        <!-- Navbar Bereich für Rechner -->
+        <a href="#calculator-section" class="w3-bar-item w3-button w3-hover-light-grey">Eingabe und Ausgabe</a>
+    </nav>
 
-        <main>
-            <section id="info-section">
-                <!-- Erklärung vom Projekt und der fuktionalität -->
-                <p>Dieser <b>Linux-Berechtigungsrechner</b> wurde von Elio Heinz für des Moduls "Web Technologies" als praktische Arbeit im HS24 entwickelt. <br>User können Linux-Dateiberechtigungen einfach verwalten, indem sie zwischen symbolischer Darstellung, numerischer Darstellung und Checkboxen wechseln.<br>Das Ergebnis wird automatisch in den anderen Feldern angezeigt.</p>
-                <ul>
-                    <li><strong>Symbolische Darstellung:</strong> z. B. rwxrwxrwx</li>
-                    <li><strong>Numerische Darstellung:</strong> z. B. 777</li>
-                    <li><strong>Checkboxen:</strong> für detaillierte Anpassung der Berechtigungen</li>
-                </ul>
-                <!-- <img src="img/permissions-diagram.png" alt="Permissions Diagram"> !-->
-            </section>
+    <main class="w3-container">
+        <section id="info-section" class="w3-section">
+            <!-- Erklärung vom Projekt und der fuktionalität -->
+            <p class="w3-text-dark-grey">
+                Dieser <b>Linux-Berechtigungsrechner</b> wurde von Elio Heinz für des Moduls "Web Technologies" als praktische Arbeit im HS24 entwickelt. <br>
+                User können Linux-Dateiberechtigungen einfach verwalten, indem sie zwischen symbolischer Darstellung, numerischer Darstellung und Checkboxen wechseln.<br>
+                Das Ergebnis wird automatisch in den anderen Feldern angezeigt.
+            </p>
+            <ul class="w3-ul w3-border">
+                <li><strong>Symbolische Darstellung:</strong> z. B. rwxrwxrwx</li>
+                <li><strong>Numerische Darstellung:</strong> z. B. 777</li>
+                <li><strong>Checkboxen:</strong> für detaillierte Anpassung der Berechtigungen</li>
+            </ul>
+        </section>
 
-            <section id="calculator-section">
-                <!-- Input/Output Teil Symbolische Darstellung -->
-                <fieldset>
-                    <legend>Symbolische Darstellung</legend>
-                    <input type="text" id="text-permissions" maxlength="9" placeholder="z.B. rwxrwxrwx">
-                </fieldset>
-                
-                <!-- Input/Output Teil Numerische Darstellung -->
-                <fieldset>
-                    <legend>Numerische Darstellung</legend>
-                    <input type="number" id="numeric-permissions" min="0" max="777" placeholder="z.B. 777">
-                </fieldset>
+        <section id="calculator-section" class="w3-section">
+            <!-- Input/Output Teil Symbolische Darstellung -->
+            <fieldset class="w3-card-4 w3-padding">
+                <legend class="w3-text-grey">Symbolische Darstellung</legend>
+                <input type="text" id="text-permissions" maxlength="9" placeholder="z.B. rwxrwxrwx" class="w3-input">
+            </fieldset>
+            
+            <!-- Input/Output Teil Numerische Darstellung -->
+            <fieldset class="w3-card-4 w3-padding">
+                <legend class="w3-text-grey">Numerische Darstellung</legend>
+                <input type="number" id="numeric-permissions" min="0" max="777" placeholder="z.B. 777" class="w3-input">
+            </fieldset>
 
-                <!-- Input/Output Teil Checkboxen -->
-                <fieldset>
-                    <legend>Checkboxen</legend>
-                    <div id="checkbox-section">
-                        <fieldset>
-                            <legend>Besitzer</legend>
-                            <label><input type="checkbox" name="checkboxes[owner-read]" id="owner-read"> Lesen</label>
-                            <label><input type="checkbox" name="checkboxes[owner-write]" id="owner-write"> Schreiben</label>
-                            <label><input type="checkbox" name="checkboxes[owner-execute]" id="owner-execute"> Ausführen</label>
-                        </fieldset>
-                        <fieldset>
-                            <legend>Gruppe</legend>
-                            <label><input type="checkbox" name="checkboxes[group-read]" id="group-read"> Lesen</label>
-                            <label><input type="checkbox" name="checkboxes[group-write]" id="group-write"> Schreiben</label>
-                            <label><input type="checkbox" name="checkboxes[group-execute]" id="group-execute"> Ausführen</label>
-                        </fieldset>
-                        <fieldset>
-                            <legend>Andere</legend>
-                            <label><input type="checkbox" name="checkboxes[others-read]" id="others-read"> Lesen</label>
-                            <label><input type="checkbox" name="checkboxes[others-write]" id="others-write"> Schreiben</label>
-                            <label><input type="checkbox" name="checkboxes[others-execute]" id="others-execute"> Ausführen</label>
-                        </fieldset>                                  
-                    </div>
-                </fieldset>
-                <!-- Knopf zum berechnen -->
-                <div class="button-wrapper">
-                    <button id="calculate-button">Berechnen</button>
+            <!-- Input/Output Teil Checkboxen -->
+            <fieldset class="w3-card-4 w3-padding">
+                <legend class="w3-text-grey">Checkboxen</legend>
+                <div id="checkbox-section" class="w3-row">
+                    <fieldset class="w3-col s12 m4 l4 w3-padding-small">
+                        <legend>Besitzer</legend>
+                        <label><input type="checkbox" name="checkboxes[owner-read]" id="owner-read"> Lesen</label>
+                        <label><input type="checkbox" name="checkboxes[owner-write]" id="owner-write"> Schreiben</label>
+                        <label><input type="checkbox" name="checkboxes[owner-execute]" id="owner-execute"> Ausführen</label>
+                    </fieldset>
+                    <fieldset class="w3-col s12 m4 l4 w3-padding-small">
+                        <legend>Gruppe</legend>
+                        <label><input type="checkbox" name="checkboxes[group-read]" id="group-read"> Lesen</label>
+                        <label><input type="checkbox" name="checkboxes[group-write]" id="group-write"> Schreiben</label>
+                        <label><input type="checkbox" name="checkboxes[group-execute]" id="group-execute"> Ausführen</label>
+                    </fieldset>
+                    <fieldset class="w3-col s12 m4 l4 w3-padding-small">
+                        <legend>Andere</legend>
+                        <label><input type="checkbox" name="checkboxes[others-read]" id="others-read"> Lesen</label>
+                        <label><input type="checkbox" name="checkboxes[others-write]" id="others-write"> Schreiben</label>
+                        <label><input type="checkbox" name="checkboxes[others-execute]" id="others-execute"> Ausführen</label>
+                    </fieldset>                                  
                 </div>
+            </fieldset>
 
-            </section>
-        </main>
-        <!-- Javascript aufgeteilt in Navigation und Rechner -->
-        <script src="js/navigation.js" defer></script>
-        <script src="js/calculator.js" defer></script>
-    </body>
-    </html>
+            <!-- Knopf zum berechnen -->
+            <div class="button-wrapper w3-center">
+                <button id="calculate-button" class="w3-button w3-black w3-hover-orange">Berechnen</button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Javascript aufgeteilt in Navigation und Rechner -->
+    <script src="js/navigation.js" defer></script>
+    <script src="js/calculator.js" defer></script>
+</body>
+</html>

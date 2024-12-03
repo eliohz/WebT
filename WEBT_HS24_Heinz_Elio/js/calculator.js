@@ -111,7 +111,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     updateFields(symbolic, numeric);
 
                     // Letzten symbolischen Wert als Cookie setzen
-                    document.cookie = `lastPermission=${encodeURIComponent(symbolic)}; path=/; max-age=3600`; // 1 Stunde
+                    document.cookie = `lastPermission=${encodeURIComponent(symbolic)}; path=/; max-age=3600`;
                 } else {
                     console.error("Backend-Fehler:", error);
                 }

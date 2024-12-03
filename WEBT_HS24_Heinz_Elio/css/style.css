@@ -1,8 +1,6 @@
-/* ----------------------- W3 CSS implementation ----------------------- */
 @import url('https://www.w3schools.com/w3css/4/w3.css');
 
-
-/* -------------------------- Basic CSS Teil --------------------------- */
+/* ---------------------- Basic Styles ---------------------- */
 body {
     font-family: monospace;
     margin: 0;
@@ -42,7 +40,6 @@ button:hover {
     background-color: #E3A909;
 }
 
-
 header {
     display: flex;
     justify-content: center;
@@ -53,7 +50,6 @@ header {
 }
 
 header h1 {
-    font-family: monospace !important;
     margin: 0 1rem;
     font-size: 2rem;
 }
@@ -93,17 +89,18 @@ fieldset {
     margin: 1rem 0;
     width: 100%;
     max-width: 600px;
+    padding: 0.5rem;
+}
+
+legend {
+    font-weight: bold;
+    font-size: 1.2rem;
 }
 
 fieldset label {
     display: flex;
     align-items: center;
     margin: 0;
-}
-
-legend {
-    font-weight: bold;
-    font-size: 1.2rem;
 }
 
 #checkbox-section {
@@ -123,9 +120,8 @@ legend {
     min-width: 150px;
 }
 
-/* ------------------ Responsive CSS Teil für Mobile ------------------- */
+/* ---------------------- Responsive Styles (Mobile) ---------------------- */
 @media screen and (max-width: 600px) {
-
     header img {
         display: none;
     }
