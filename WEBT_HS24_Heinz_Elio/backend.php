@@ -1,15 +1,15 @@
 <?php
 header('Content-Type: application/json');
 
-// Enable error reporting for debugging
+// Debugging https://stackoverflow.com/questions/2731297/file-get-contentsphp-input-or-http-raw-post-data-which-one-is-better-to
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
-// Read and log the raw POST body for debugging
+// Debugging (https://stackoverflow.com/questions/2731297/file-get-contentsphp-input-or-http-raw-post-data-which-one-is-better-to)
 $rawInput = file_get_contents("php://input");
 file_put_contents('php://stderr', "Raw Input: $rawInput\n", FILE_APPEND);
 
-// Decode the JSON input
+// JSON Decoding mit Fehler Funktion
 $data = json_decode($rawInput, true);
 
 if (!$data) {
@@ -17,29 +17,27 @@ if (!$data) {
     exit;
 }
 
-// Get the symbolic or numeric value from the input
+// User Imput auslesen
 $symbolic = $data['symbolic'] ?? '';
 $numeric = $data['numeric'] ?? '';
 
 if ($symbolic) {
-    // Convert symbolic to numeric
     $numeric = symbolicToNumeric($symbolic);
 } elseif ($numeric) {
-    // Convert numeric to symbolic
     $symbolic = numericToSymbolic($numeric);
 } else {
-    echo json_encode(['success' => false, 'error' => 'Invalid input.']);
+    echo json_encode(['success' => false, 'error' => 'Wrong Input']);
     exit;
 }
 
-// Return the result
+// Resultat zurückgeben
 echo json_encode([
     'success' => true,
     'symbolic' => $symbolic,
     'numeric' => $numeric,
 ]);
 
-// Convert numeric permissions to symbolic (e.g., "755" to "rwxr-xr-x")
+// Numerisch umrechnen zu Symbolisch
 function numericToSymbolic($numeric) {
     $permissions = ["---", "--x", "-w-", "-wx", "r--", "r-x", "rw-", "rwx"];
     $symbolic = "";
@@ -51,7 +49,7 @@ function numericToSymbolic($numeric) {
     return $symbolic;
 }
 
-// Convert symbolic permissions to numeric (e.g., "rwxr-xr-x" to "755")
+// Symbolisch umrechnen in Nummerisch
 function symbolicToNumeric($symbolic) {
     $mapping = ['r' => 4, 'w' => 2, 'x' => 1, '-' => 0];
     $numeric = "";
