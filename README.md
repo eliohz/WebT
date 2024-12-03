@@ -8,7 +8,7 @@ Dieses Projekt ist eine Webapplikation, die im Rahmen des Abschlussprojekts für
 ## Anforderungen
 - **Frontend**: Ein HTML-Dokument mit Navigation, Informationsbereich, Eingabefeldern und einem Ausgabebereich. Eingaben werden ohne Seiten-Neuladen ans Backend gesendet.
 - **Backend**: Verarbeitung der Eingaben, Erstellung eines JSON-Dokuments und Rückgabe einer Antwort mit sichtbarem Effekt.
-- **Technologien**: HTML, CSS, JavaScript, PHP, SQL, JSON, AJAX, W3.CSS, Vue.js.
+- **Technologien**: HTML, CSS, JavaScript, PHP, SQL, JSON, AJAX, W3.CSS.
 
 ## Merkmale
 - Responsives Layout mit W3.CSS.
