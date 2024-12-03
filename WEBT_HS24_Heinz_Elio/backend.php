@@ -21,21 +21,31 @@ if (!$data) {
 $symbolic = $data['symbolic'] ?? '';
 $numeric = $data['numeric'] ?? '';
 
+// Custom Cookie Handling
+$lastInput = $_COOKIE['lastInput'] ?? null;
+
 if ($symbolic) {
     $numeric = symbolicToNumeric($symbolic);
+    setcookie('lastInput', $symbolic, time() + 3600, "/");
 } elseif ($numeric) {
     $symbolic = numericToSymbolic($numeric);
+    setcookie('lastInput', $symbolic, time() + 3600, "/");
+} elseif ($lastInput) {
+    $symbolic = $lastInput;
+    $numeric = symbolicToNumeric($lastInput);
 } else {
     echo json_encode(['success' => false, 'error' => 'Wrong Input']);
     exit;
 }
 
 // Resultat zurückgeben
-echo json_encode([
+$response = [
     'success' => true,
     'symbolic' => $symbolic,
     'numeric' => $numeric,
-]);
+    'lastInput' => $lastInput
+];
+echo json_encode($response);
 
 // Numerisch umrechnen zu Symbolisch
 function numericToSymbolic($numeric) {

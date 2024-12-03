@@ -11,6 +11,16 @@ const permissionMap = {
     "others-read": 6, "others-write": 7, "others-execute": 8,
 };
 
+// Funktion zum Lesen der Cookies
+const getCookie = (name) => {
+    const cookies = document.cookie.split('; ');
+    for (let cookie of cookies) {
+        const [key, value] = cookie.split('=');
+        if (key === name) return decodeURIComponent(value);
+    }
+    return null;
+};
+
 // Funktion zur Aktualisierung der Felder
 const updateFields = (symbolic = "", numeric = "") => {
     textPermissions.value = symbolic;
@@ -45,8 +55,32 @@ const sendDataToBackend = (data) => {
     });
 };
 
+// Funktion zum Laden der Felder aus Cookies
+const populateFieldsFromCookie = () => {
+    const lastPermission = getCookie('lastPermission'); // Lesen des Cookies
+    if (lastPermission) {
+        // Symbolische Berechtigungen und numerische Darstellung aktualisieren
+        updateFields(lastPermission, symbolicToNumeric(lastPermission));
+    }
+};
+
+// Clientseitige Funktion zur Umwandlung von symbolischen in numerische Berechtigungen
+const symbolicToNumeric = (symbolic) => {
+    const permissions = { r: 4, w: 2, x: 1, '-': 0 };
+    let numeric = [0, 0, 0];
+
+    symbolic.split("").forEach((char, i) => {
+        numeric[Math.floor(i / 3)] += permissions[char];
+    });
+
+    return numeric.join("");
+};
+
 document.addEventListener("DOMContentLoaded", () => {
     let lastInputSource = null, noInputClickCount = 0;
+
+    // Felder beim Laden der Seite aus Cookies auffüllen
+    populateFieldsFromCookie();
 
     // Event-Listener für Änderungen der Eingabefelder (text und numerisch)
     [textPermissions, numericPermissions].forEach(input =>
@@ -73,8 +107,14 @@ document.addEventListener("DOMContentLoaded", () => {
         // Anfrage an das Backend senden und mit der Antwort weiterarbeiten
         sendDataToBackend(data)
             .then(({ success, symbolic, numeric, error }) => {
-                if (success) updateFields(symbolic, numeric);
-                else console.error("Backend-Fehler:", error);
+                if (success) {
+                    updateFields(symbolic, numeric);
+
+                    // Letzten symbolischen Wert als Cookie setzen
+                    document.cookie = `lastPermission=${encodeURIComponent(symbolic)}; path=/; max-age=3600`; // 1 Stunde
+                } else {
+                    console.error("Backend-Fehler:", error);
+                }
             });
     });
 });
