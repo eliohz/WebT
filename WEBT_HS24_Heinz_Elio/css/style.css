@@ -1,6 +1,5 @@
 @import url('https://www.w3schools.com/w3css/4/w3.css');
 
-/* ---------------------- Basic Styles ---------------------- */
 body {
     font-family: monospace;
     margin: 0;
@@ -120,7 +119,7 @@ fieldset label {
     min-width: 150px;
 }
 
-/* ---------------------- Responsive Styles (Mobile) ---------------------- */
+/* -------------------- Responsive Styles (für Mobile) -------------------- */
 @media screen and (max-width: 600px) {
     header img {
         display: none;
