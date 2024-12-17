@@ -9,9 +9,10 @@ error_reporting(E_ALL);
 $rawInput = file_get_contents("php://input");
 file_put_contents('php://stderr', "Raw Input: $rawInput\n", FILE_APPEND);
 
-// JSON Decoding mit Fehler Funktion
+// JSON Decoding
 $data = json_decode($rawInput, true);
 
+// JSON Debugging 
 if (!$data) {
     echo json_encode(['success' => false, 'error' => 'No data received or invalid JSON.']);
     exit;
