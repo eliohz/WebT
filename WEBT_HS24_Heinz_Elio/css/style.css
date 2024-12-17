@@ -65,7 +65,7 @@ nav {
     text-align: center;
 }
 
-nav.w3-bar-item  {
+nav.w3-bar  {
     display: flex;
     justify-content: center;
 }
