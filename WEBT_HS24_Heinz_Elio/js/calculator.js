@@ -3,6 +3,15 @@ const calculateButton = document.getElementById("calculate-button");
 const textPermissions = document.getElementById("text-permissions");
 const numericPermissions = document.getElementById("numeric-permissions");
 const checkboxes = document.querySelectorAll("#checkbox-section input[type='checkbox']");
+const textError = document.createElement("div");
+const numericError = document.createElement("div");
+
+// Hinzufügen der Fehlermeldungscontainer
+textPermissions.insertAdjacentElement("afterend", textError);
+numericPermissions.insertAdjacentElement("afterend", numericError);
+
+// Styling für Fehlermeldungen
+textError.className = numericError.className = "error-message";
 
 // MAPPING für Berechtigungen
 const permissionMap = {
@@ -35,6 +44,7 @@ const updateFields = (symbolic = "", numeric = "") => {
 const resetFields = () => {
     textPermissions.value = numericPermissions.value = "";
     checkboxes.forEach(checkbox => checkbox.checked = false);
+    textError.textContent = numericError.textContent = "";
 };
 
 // Funktion zum Ermitteln, welche Checkboxen aktiviert sind
@@ -59,33 +69,48 @@ const sendDataToBackend = (data) => {
 const populateFieldsFromCookie = () => {
     const lastPermission = getCookie('lastPermission'); // Lesen des Cookies
     if (lastPermission) {
-        // Symbolische Berechtigungen und numerische Darstellung aktualisieren
-        updateFields(lastPermission, symbolicToNumeric(lastPermission));
+        // Anfrage an das Backend, um symbolische und numerische Werte zu holen
+        sendDataToBackend({ symbolic: lastPermission })
+            .then(({ success, symbolic, numeric, error }) => {
+                if (success) {
+                    updateFields(symbolic, numeric);
+                } else {
+                    console.error("Backend-Fehler:", error);
+                }
+            });
     }
 };
 
-// Clientseitige Funktion zur Umwandlung von symbolischen in numerische Berechtigungen
-const symbolicToNumeric = (symbolic) => {
-    const permissions = { r: 4, w: 2, x: 1, '-': 0 };
-    let numeric = [0, 0, 0];
-
-    symbolic.split("").forEach((char, i) => {
-        numeric[Math.floor(i / 3)] += permissions[char];
-    });
-
-    return numeric.join("");
-};
+// Validierungsfunktionen
+const validateSymbolic = (value) => /^[rwx-]{0,9}$/.test(value);
+const validateNumeric = (value) => /^[0-7]{0,3}$/.test(value);
 
 document.addEventListener("DOMContentLoaded", () => {
-    let lastInputSource = null, noInputClickCount = 0;
+    let lastInputSource = null;
 
     // Felder beim Laden der Seite aus Cookies auffüllen
     populateFieldsFromCookie();
 
     // Event-Listener für Änderungen der Eingabefelder (text und numerisch)
-    [textPermissions, numericPermissions].forEach(input =>
-        input.addEventListener("input", () => lastInputSource = input.id.includes("text") ? "symbolic" : "numeric")
-    );
+    textPermissions.addEventListener("input", () => {
+        lastInputSource = "symbolic";
+        const value = textPermissions.value.trim();
+        if (!validateSymbolic(value)) {
+            textError.textContent = "Nur die Zeichen r, w, x oder - erlaubt, maximal 9 Zeichen.";
+        } else {
+            textError.textContent = "";
+        }
+    });
+
+    numericPermissions.addEventListener("input", () => {
+        lastInputSource = "numeric";
+        const value = numericPermissions.value.trim();
+        if (!validateNumeric(value)) {
+            numericError.textContent = "Nur Zahlen 0–7 erlaubt, maximal 3 Zeichen.";
+        } else {
+            numericError.textContent = "";
+        }
+    });
 
     // Event-Listener für Änderungen der Checkboxen
     checkboxes.forEach(checkbox =>
@@ -93,16 +118,29 @@ document.addEventListener("DOMContentLoaded", () => {
     );
 
     // Event-Listener für den Berechnen Button
-    calculateButton.addEventListener("click", () => {
+    calculateButton.addEventListener("click", (e) => {
         const data = lastInputSource === "symbolic"
             ? { symbolic: textPermissions.value.trim() }
             : lastInputSource === "numeric"
                 ? { numeric: numericPermissions.value.trim() }
                 : { symbolic: getCheckboxInput() };
 
-        if (!Object.values(data)[0]) return;
+        // Finaler Validierungs-Check vor dem Absenden
+        const isSymbolicValid = validateSymbolic(textPermissions.value.trim());
+        const isNumericValid = validateNumeric(numericPermissions.value.trim());
 
-        noInputClickCount = 0;
+        if (!isSymbolicValid) {
+            textError.textContent = "Ungültige symbolische Eingabe.";
+        }
+
+        if (!isNumericValid) {
+            numericError.textContent = "Ungültige numerische Eingabe.";
+        }
+
+        if (!isSymbolicValid || !isNumericValid) {
+            e.preventDefault(); // Verhindere Absenden bei ungültigen Eingaben
+            return;
+        }
 
         // Anfrage an das Backend senden und mit der Antwort weiterarbeiten
         sendDataToBackend(data)

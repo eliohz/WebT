@@ -42,13 +42,21 @@
             <!-- Input/Output Teil Symbolische Darstellung -->
             <fieldset class="w3-card-4 w3-padding">
                 <legend class="w3-text-grey">Symbolische Darstellung</legend>
-                <input type="text" id="text-permissions" maxlength="9" placeholder="z.B. rwxrwxrwx" class="w3-input">
+                <div class="input-with-warning">
+                    <input type="text" id="text-permissions" maxlength="9" placeholder="z.B. rwxrwxrwx" class="w3-input">
+                    <canvas id="text-canvas" width="30" height="30" style="display: none;"></canvas>
+                </div>
+                <div id="text-error" class="error-message"></div>
             </fieldset>
-            
+
             <!-- Input/Output Teil Numerische Darstellung -->
             <fieldset class="w3-card-4 w3-padding">
                 <legend class="w3-text-grey">Numerische Darstellung</legend>
-                <input type="number" id="numeric-permissions" min="0" max="777" placeholder="z.B. 777" class="w3-input">
+                <div class="input-with-warning">
+                    <input type="number" id="numeric-permissions" min="0" max="777" placeholder="z.B. 777" class="w3-input">
+                    <canvas id="numeric-canvas" width="30" height="30" style="display: none;"></canvas>
+                </div>
+                <div id="numeric-error" class="error-message"></div>
             </fieldset>
 
             <!-- Input/Output Teil Checkboxen -->
