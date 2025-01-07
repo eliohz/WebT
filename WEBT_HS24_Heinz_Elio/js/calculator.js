@@ -4,6 +4,32 @@ const numericPermissions = document.getElementById("numeric-permissions");
 const checkboxes = document.querySelectorAll("#checkbox-section input[type='checkbox']");
 const textError = document.createElement("div");
 const numericError = document.createElement("div");
+const allowedPermissions = ['rwxrwxrwx', 'rwxrwxrw-', 'rwxrwxr--', 'rwxrwx---','rwxrw-rw-', 'rwxrw-r--', 'rwxrw----', 'rwxr--rw-','rwxr--r--', 'rwxr-----', 'rw-rw-rw-', 'rw-rw-r--','rw-rw----', 'rw-r--rw-', 'rw-r--r--', 'rw-r-----','r--r--r--', 'r--r--rw-', 'r--rw----', 'rw-------','r--------', '---------'];
+const validateSymbolic = (value) => allowedPermissions.includes(value);
+const validateNumeric = (value) => /^[0-7]{0,3}$/.test(value);
+
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+ctx.clearRect(0, 0, canvas.width, canvas.height);
+ctx.beginPath();
+ctx.moveTo(15, 3);
+ctx.lineTo(27, 27);
+ctx.lineTo(3, 27);
+ctx.closePath();
+ctx.fillStyle = "yellow";
+ctx.fill();
+ctx.strokeStyle = "black";
+ctx.stroke();
+ctx.beginPath();
+ctx.arc(15, 22, 2, 0, Math.PI * 2);
+ctx.fillStyle = "black";
+ctx.fill();
+ctx.beginPath();
+ctx.moveTo(15, 8);
+ctx.lineTo(15, 18);
+ctx.strokeStyle = "black";
+ctx.lineWidth = 3;
+ctx.stroke();
 
 textPermissions.insertAdjacentElement("afterend", textError);
 numericPermissions.insertAdjacentElement("afterend", numericError);
@@ -71,18 +97,6 @@ const populateFieldsFromCookie = () => {
     }
 };
 
-const allowedPermissions = [
-    'rwxrwxrwx', 'rwxrwxrw-', 'rwxrwxr--', 'rwxrwx---',
-    'rwxrw-rw-', 'rwxrw-r--', 'rwxrw----', 'rwxr--rw-',
-    'rwxr--r--', 'rwxr-----', 'rw-rw-rw-', 'rw-rw-r--',
-    'rw-rw----', 'rw-r--rw-', 'rw-r--r--', 'rw-r-----',
-    'r--r--r--', 'r--r--rw-', 'r--rw----', 'rw-------',
-    'r--------', '---------'
-];
-
-const validateSymbolic = (value) => allowedPermissions.includes(value);
-const validateNumeric = (value) => /^[0-7]{0,3}$/.test(value);
-
 document.addEventListener("DOMContentLoaded", () => {
     let lastInputSource = null;
 
@@ -92,9 +106,12 @@ document.addEventListener("DOMContentLoaded", () => {
         lastInputSource = "symbolic";
         const value = textPermissions.value.trim();
         if (!validateSymbolic(value)) {
+            canvas.style.display = "block";
             textError.textContent = "Nur r, w, x oder - erlaubt, 9 Zeichen";
+
         } else {
             textError.textContent = "";
+            canvas.style.display = "none";
         }
     });
 
@@ -102,9 +119,11 @@ document.addEventListener("DOMContentLoaded", () => {
         lastInputSource = "numeric";
         const value = numericPermissions.value.trim();
         if (!validateNumeric(value)) {
+            canvas.style.display = "block";
             numericError.textContent = "Nur Zahlen 0–7 erlaubt, 3 Zeichen.";
         } else {
             numericError.textContent = "";
+            canvas.style.display = "none";
         }
     });
 
