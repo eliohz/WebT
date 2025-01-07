@@ -83,7 +83,7 @@ document.addEventListener("DOMContentLoaded", () => {
         lastInputSource = "symbolic";
         const value = textPermissions.value.trim();
         if (!validateSymbolic(value)) {
-            textError.textContent = "Nur die Zeichen r, w, x oder - erlaubt, maximal 9 Zeichen.";
+            textError.textContent = "Nur r, w, x oder - erlaubt, 9 Zeichen";
         } else {
             textError.textContent = "";
         }
@@ -93,7 +93,7 @@ document.addEventListener("DOMContentLoaded", () => {
         lastInputSource = "numeric";
         const value = numericPermissions.value.trim();
         if (!validateNumeric(value)) {
-            numericError.textContent = "Nur Zahlen 0–7 erlaubt, maximal 3 Zeichen.";
+            numericError.textContent = "Nur Zahlen 0–7 erlaubt, 3 Zeichen.";
         } else {
             numericError.textContent = "";
         }

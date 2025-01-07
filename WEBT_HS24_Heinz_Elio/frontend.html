@@ -10,22 +10,18 @@
 </head>
 <body class="w3-light-grey">
     <header class="w3-container w3-dark-grey w3-center">
-        <!-- Header -->
         <img src="img/tux.png" alt="Tux" class="w3-image w3-round" style="width: 50px; height: auto;">
         <h1>Linux Permission Calculator</h1>
         <img src="img/tux.png" alt="Tux" class="w3-image w3-round" style="width: 50px; height: auto;">
     </header>
 
     <nav class="w3-bar">
-        <!-- Navbar Bereich für Informativer Teil -->
         <a href="#info-section" class="w3-bar-item w3-button w3-hover-light-grey">Information</a>
-        <!-- Navbar Bereich für Rechner -->
         <a href="#calculator-section" class="w3-bar-item w3-button w3-hover-light-grey">Eingabe und Ausgabe</a>
     </nav>
 
     <main class="w3-container">
         <section id="info-section" class="w3-section">
-            <!-- Erklärung vom Projekt und der fuktionalität -->
             <p class="w3-text-dark-grey">
                 Dieser <b>Linux-Berechtigungsrechner</b> wurde von Elio Heinz für des Moduls "Web Technologies" als praktische Arbeit im HS24 entwickelt. <br>
                 User können Linux-Dateiberechtigungen einfach verwalten, indem sie zwischen symbolischer Darstellung, numerischer Darstellung und Checkboxen wechseln.<br>
@@ -39,7 +35,6 @@
         </section>
 
         <section id="calculator-section" class="w3-section">
-            <!-- Input/Output Teil Symbolische Darstellung -->
             <fieldset class="w3-card-4 w3-padding">
                 <legend class="w3-text-grey">Symbolische Darstellung</legend>
                 <div class="input-with-warning">
@@ -49,7 +44,6 @@
                 <div id="text-error" class="error-message"></div>
             </fieldset>
 
-            <!-- Input/Output Teil Numerische Darstellung -->
             <fieldset class="w3-card-4 w3-padding">
                 <legend class="w3-text-grey">Numerische Darstellung</legend>
                 <div class="input-with-warning">
@@ -59,7 +53,6 @@
                 <div id="numeric-error" class="error-message"></div>
             </fieldset>
 
-            <!-- Input/Output Teil Checkboxen -->
             <fieldset class="w3-card-4 w3-padding">
                 <legend class="w3-text-grey">Checkboxen</legend>
                 <div id="checkbox-section" class="w3-row">
@@ -84,14 +77,12 @@
                 </div>
             </fieldset>
 
-            <!-- Knopf zum berechnen -->
             <div class="button-wrapper w3-center">
                 <button id="calculate-button" class="w3-button w3-black w3-hover-orange">Berechnen</button>
             </div>
         </section>
     </main>
 
-    <!-- Javascript aufgeteilt in Navigation und Rechner -->
     <script src="js/navigation.js" defer></script>
     <script src="js/calculator.js" defer></script>
 </body>

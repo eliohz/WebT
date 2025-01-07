@@ -1,28 +1,24 @@
 <?php
 header('Content-Type: application/json');
 
-// Debugging https://stackoverflow.com/questions/2731297/file-get-contentsphp-input-or-http-raw-post-data-which-one-is-better-to
+// https://stackoverflow.com/questions/2731297/file-get-contentsphp-input-or-http-raw-post-data-which-one-is-better-to
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
-// Debugging (https://stackoverflow.com/questions/2731297/file-get-contentsphp-input-or-http-raw-post-data-which-one-is-better-to)
+// https://stackoverflow.com/questions/2731297/file-get-contentsphp-input-or-http-raw-post-data-which-one-is-better-to
 $rawInput = file_get_contents("php://input");
 file_put_contents('php://stderr', "Raw Input: $rawInput\n", FILE_APPEND);
 
-// JSON Decoding
 $data = json_decode($rawInput, true);
 
-// JSON Debugging 
 if (!$data) {
     echo json_encode(['success' => false, 'error' => 'No data received or invalid JSON.']);
     exit;
 }
 
-// User Imput auslesen
 $symbolic = $data['symbolic'] ?? '';
 $numeric = $data['numeric'] ?? '';
 
-// Cookie Handling
 $lastInput = $_COOKIE['lastInput'] ?? null;
 
 if ($symbolic) {
@@ -39,7 +35,6 @@ if ($symbolic) {
     exit;
 }
 
-// Resultat zurückgeben
 $response = [
     'success' => true,
     'symbolic' => $symbolic,
@@ -48,7 +43,6 @@ $response = [
 ];
 echo json_encode($response);
 
-// Numerisch umrechnen zu Symbolisch
 function numericToSymbolic($numeric) {
     $permissions = ["---", "--x", "-w-", "-wx", "r--", "r-x", "rw-", "rwx"];
     $symbolic = "";
@@ -60,7 +54,6 @@ function numericToSymbolic($numeric) {
     return $symbolic;
 }
 
-// Symbolisch umrechnen in Nummerisch
 function symbolicToNumeric($symbolic) {
     $mapping = ['r' => 4, 'w' => 2, 'x' => 1, '-' => 0];
     $numeric = "";
