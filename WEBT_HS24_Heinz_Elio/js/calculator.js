@@ -71,7 +71,16 @@ const populateFieldsFromCookie = () => {
     }
 };
 
-const validateSymbolic = (value) => /^[rwx-]{0,9}$/.test(value);
+const allowedPermissions = [
+    'rwxrwxrwx', 'rwxrwxrw-', 'rwxrwxr--', 'rwxrwx---',
+    'rwxrw-rw-', 'rwxrw-r--', 'rwxrw----', 'rwxr--rw-',
+    'rwxr--r--', 'rwxr-----', 'rw-rw-rw-', 'rw-rw-r--',
+    'rw-rw----', 'rw-r--rw-', 'rw-r--r--', 'rw-r-----',
+    'r--r--r--', 'r--r--rw-', 'r--rw----', 'rw-------',
+    'r--------', '---------'
+];
+
+const validateSymbolic = (value) => allowedPermissions.includes(value);
 const validateNumeric = (value) => /^[0-7]{0,3}$/.test(value);
 
 document.addEventListener("DOMContentLoaded", () => {
