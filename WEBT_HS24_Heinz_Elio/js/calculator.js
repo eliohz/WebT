@@ -11,6 +11,31 @@ const permissionMap = {
     "others-read": 6, "others-write": 7, "others-execute": 8,
 };
 
+// Funktion zur Validierung symbolischer Berechtigungen
+const isValidSymbolicPermission = (input) => {
+    const regex = /^[r-][w-][x-][r-][w-][x-][r-][w-][x-]$/;
+    return regex.test(input);
+};
+
+// Funktion zur Validierung numerischer Berechtigungen
+const isValidNumericPermission = (input) => {
+    const regex = /^[1-7][[1-7]][[1-7]]$/;
+    return regex.test(input);
+};
+
+// Funktion zur Überprüfung und Anzeige von Fehlern
+const validateInput = (inputType, value) => {
+    if (inputType === "symbolic" && !isValidSymbolicPermission(value)) {
+        alert("Die Eingabe muss eine gültige symbolische Linux-Berechtigung sein");
+        return false;
+    }
+    if (inputType === "numeric" && !isValidNumericPermission(value)) {
+        alert("Die Eingabe muss eine gültige numerische Linux-Berechtigung sein.");
+        return false;
+    }
+    return true;
+};
+
 // Funktion zum Lesen der Cookies
 const getCookie = (name) => {
     const cookies = document.cookie.split('; ');
@@ -95,7 +120,16 @@ document.addEventListener("DOMContentLoaded", () => {
                 ? { numeric: numericPermissions.value.trim() }
                 : { symbolic: getCheckboxInput() };
 
-        if (!Object.values(data)[0]) return;
+        const inputType = lastInputSource === "symbolic" ? "symbolic" : "numeric";
+        const inputValue = Object.values(data)[0];
+
+        if (!inputValue) {
+            alert("Bitte geben Sie gültige Berechtigungen ein.");
+            return;
+        }
+
+        // Eingabe validieren
+        if (!validateInput(inputType, inputValue)) return;
 
         noInputClickCount = 0;
 
