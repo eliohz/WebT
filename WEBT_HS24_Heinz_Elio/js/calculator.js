@@ -19,7 +19,7 @@ const isValidSymbolicPermission = (input) => {
 
 // Funktion zur Validierung numerischer Berechtigungen
 const isValidNumericPermission = (input) => {
-    const regex = /^[1-7][[1-7]][[1-7]]$/;
+    const regex = /^[0-7][[0-7]][[0-7]]$/;
     return regex.test(input);
 };
 
