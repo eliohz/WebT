@@ -59,21 +59,16 @@ const sendDataToBackend = (data) => {
 const populateFieldsFromCookie = () => {
     const lastPermission = getCookie('lastPermission'); // Lesen des Cookies
     if (lastPermission) {
-        // Symbolische Berechtigungen und numerische Darstellung aktualisieren
-        updateFields(lastPermission, symbolicToNumeric(lastPermission));
+        // Anfrage an das Backend senden, um Felder zu aktualisieren
+        sendDataToBackend({ symbolic: lastPermission })
+            .then(({ success, symbolic, numeric }) => {
+                if (success) {
+                    updateFields(symbolic, numeric);
+                } else {
+                    console.error("Fehler beim Laden der Felder aus Cookies.");
+                }
+            });
     }
-};
-
-// Clientseitige Funktion zur Umwandlung von symbolischen in numerische Berechtigungen
-const symbolicToNumeric = (symbolic) => {
-    const permissions = { r: 4, w: 2, x: 1, '-': 0 };
-    let numeric = [0, 0, 0];
-
-    symbolic.split("").forEach((char, i) => {
-        numeric[Math.floor(i / 3)] += permissions[char];
-    });
-
-    return numeric.join("");
 };
 
 document.addEventListener("DOMContentLoaded", () => {

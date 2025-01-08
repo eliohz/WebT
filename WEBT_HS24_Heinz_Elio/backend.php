@@ -1,11 +1,9 @@
 <?php
 header('Content-Type: application/json');
 
-// Debugging https://stackoverflow.com/questions/2731297/file-get-contentsphp-input-or-http-raw-post-data-which-one-is-better-to
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
-// Debugging (https://stackoverflow.com/questions/2731297/file-get-contentsphp-input-or-http-raw-post-data-which-one-is-better-to)
 $rawInput = file_get_contents("php://input");
 file_put_contents('php://stderr', "Raw Input: $rawInput\n", FILE_APPEND);
 
