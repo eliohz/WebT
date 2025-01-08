@@ -3,37 +3,13 @@ const calculateButton = document.getElementById("calculate-button");
 const textPermissions = document.getElementById("text-permissions");
 const numericPermissions = document.getElementById("numeric-permissions");
 const checkboxes = document.querySelectorAll("#checkbox-section input[type='checkbox']");
+let lastInputSource = "checkbox";
 
 // MAPPING für Berechtigungen
 const permissionMap = {
     "owner-read": 0, "owner-write": 1, "owner-execute": 2,
     "group-read": 3, "group-write": 4, "group-execute": 5,
     "others-read": 6, "others-write": 7, "others-execute": 8,
-};
-
-// Funktion zur Validierung symbolischer Berechtigungen
-const isValidSymbolicPermission = (input) => {
-    const regex = /^[r-][w-][x-][r-][w-][x-][r-][w-][x-]$/;
-    return regex.test(input);
-};
-
-// Funktion zur Validierung numerischer Berechtigungen
-const isValidNumericPermission = (input) => {
-    const regex = /^[0-7][[0-7]][[0-7]]$/;
-    return regex.test(input);
-};
-
-// Funktion zur Überprüfung und Anzeige von Fehlern
-const validateInput = (inputType, value) => {
-    if (inputType === "symbolic" && !isValidSymbolicPermission(value)) {
-        alert("Die Eingabe muss eine gültige symbolische Linux-Berechtigung sein");
-        return false;
-    }
-    if (inputType === "numeric" && !isValidNumericPermission(value)) {
-        alert("Die Eingabe muss eine gültige numerische Linux-Berechtigung sein.");
-        return false;
-    }
-    return true;
 };
 
 // Funktion zum Lesen der Cookies
@@ -112,6 +88,35 @@ document.addEventListener("DOMContentLoaded", () => {
         checkbox.addEventListener("change", () => lastInputSource = "checkbox")
     );
 
+    // Funktion zur Validierung symbolischer Berechtigungen
+const isValidSymbolicPermission = (input) => {
+    const regex = /^$|^[r-][w-][x-][r-][w-][x-][r-][w-][x-]$/;
+    return regex.test(input);
+};
+
+// Funktion zur Validierung numerischer Berechtigungen
+const isValidNumericPermission = (input) => {
+    const regex = /^$|^[0-7][0-7][0-7]$/;
+    return regex.test(input);
+};
+
+// Funktion zur Überprüfung und Anzeige von Fehlern
+const validateInput = (lastInputSource, value) => {
+    if (!value && (lastInputSource === "symbolic" || lastInputSource === "numeric")) { // Prüft auf leere Eingabe
+        alert("Bitte Eingabe machen.");
+        return false;
+    }
+    if (lastInputSource === "symbolic" && !isValidSymbolicPermission(value)) {
+        alert("Die Eingabe muss eine gültige symbolische Linux-Berechtigung sein");
+        return false;
+    }
+    if (lastInputSource === "numeric" && !isValidNumericPermission(value)) {
+        alert("Die Eingabe muss eine gültige numerische Linux-Berechtigung sein.");
+        return false;
+    }
+    return true;
+};
+
     // Event-Listener für den Berechnen Button
     calculateButton.addEventListener("click", () => {
         const data = lastInputSource === "symbolic"
@@ -120,18 +125,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 ? { numeric: numericPermissions.value.trim() }
                 : { symbolic: getCheckboxInput() };
 
-        const inputType = lastInputSource === "symbolic" ? "symbolic" : "numeric";
-        const inputValue = Object.values(data)[0];
-
-        if (!inputValue) {
-            alert("Bitte geben Sie gültige Berechtigungen ein.");
-            return;
-        }
-
         // Eingabe validieren
-        if (!validateInput(inputType, inputValue)) return;
-
-        noInputClickCount = 0;
+        const inputValue = Object.values(data)[0];
+        if (!validateInput(lastInputSource, inputValue)) return;
 
         // Anfrage an das Backend senden und mit der Antwort weiterarbeiten
         sendDataToBackend(data)
